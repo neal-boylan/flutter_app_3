@@ -1,54 +1,49 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_3/add_new_task.dart';
 import 'package:flutter_app_3/utils.dart';
 import 'package:flutter_app_3/widgets/date_selector.dart';
 import 'package:flutter_app_3/widgets/task_card.dart';
 
-class MyHomePage extends StatefulWidget {
-  static route() => MaterialPageRoute(
-        builder: (context) => const MyHomePage(),
-      );
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  Future<void> signOutUser() async {
-    await FirebaseAuth.instance.signOut();
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Tasks'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const AddNewTask(),
+                MaterialPageRoute<ProfileScreen>(
+                  builder: (context) => ProfileScreen(
+                    appBar: AppBar(
+                      title: const Text('User Profile'),
+                    ),
+                    actions: [
+                      SignedOutAction((context) {
+                        Navigator.of(context).pop();
+                      })
+                    ],
+                    // children: [
+                    //   const Divider(),
+                    //   Padding(
+                    //     padding: const EdgeInsets.all(2),
+                    //     child: AspectRatio(
+                    //       aspectRatio: 1,
+                    //       child: Image.asset('assets/flutterfire_300x.png'),
+                    //     ),
+                    //   ),
+                    // ],
+                  ),
                 ),
               );
             },
-            icon: const Icon(
-              CupertinoIcons.add,
-            ),
-          ),
-          IconButton(
-            onPressed: () async {
-              await signOutUser();
-            },
-            icon: const Icon(
-              CupertinoIcons.arrow_uturn_left,
-            ),
-          ),
+          )
         ],
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Column(

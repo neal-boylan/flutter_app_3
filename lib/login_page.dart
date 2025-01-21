@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_3/signup_page.dart';
 
+import 'home_page.dart';
+
 class LoginPage extends StatefulWidget {
   static route() => MaterialPageRoute(
         builder: (context) => const LoginPage(),
@@ -74,6 +76,9 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: () async {
                   await loginUserWithEmailAndPassword();
+                  // if (!context.mounted) return;
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => MyHomePage()));
                 },
                 child: const Text(
                   'SIGN IN',
